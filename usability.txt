@@ -1,1 +1,0 @@
-Rscript predict-tremor.R tremors/merged.csv Tremor tremors FALSE

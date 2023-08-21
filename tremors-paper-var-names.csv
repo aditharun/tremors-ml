@@ -19,6 +19,7 @@ nightmares,nightmares,Nightmares
 exerciseproblm,exercise problem,Exercise intolerance
 excessivefatigue,excessive fatigue,Excessive fatigue
 burning,burning,Burning sensations
+tremor,tremor,Tremors
 numb,numb,"Tingling, pins and needles, numbness"
 neuropathy,neuropathy,Neuropathy
 seizures,seizures,Seizures
@@ -49,7 +50,7 @@ wheezing,wheezing,Wheezing
 dyspnea,dyspnea,Shortness of breath
 boneaches,bone aches,Bone aches
 migraine,migraine,Migraine
-headache,headache,Headache 
+headache,headache,Headache
 calfcramps,calf cramps,Calf cramps
 pressurehead,head pressure,Pressure at base of head
 jawpain,jaw pain,Jaw pain
@@ -67,7 +68,7 @@ lossofhearing,loss of hearing,Loss of hearing
 vissionloss,vision loss,Loss or decrease in quality of vision/blurry vision
 phantomsmells,phantom smells,Phantom smells
 phantomtastes,phantom tastes,Phantom tastes
-hallucination,hallucination,Hallucinations 
+hallucination,hallucination,Hallucinations
 tinnitus,tinnitus,Tinnitus
 skinbruising,skin bruising,Skin bruising
 nails,nails,Change in nails
@@ -78,7 +79,7 @@ discolorskin,discolored skin,Discoloration of skin
 dryskin,dry skin,Dry skin
 dandruff,dandruff,Dry scalp
 hairloss,hair loss,Hair loss
-itchiness,itchiness,Itchiness 
+itchiness,itchiness,Itchiness
 rashfoot,foot rash,Tender or itchy rash not on foot
 chilblains,chillblains,Chillblains on hands or feet
 thirst,thirst,Constant thirst

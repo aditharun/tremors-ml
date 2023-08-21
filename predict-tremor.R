@@ -295,15 +295,16 @@ saveRDS(file=file.path(outdir, "results.rds"), list(results_gbm=results_gbm, res
 	varimp_store_xgb_gain <- results$varimp_store_xgb_gain
 	varimp_store_xgb_shap <- results$varimp_store_xgb_shap
 
-	true_names <- "tremors-paper-var-names.csv" %>% read_csv() %>% select(2,3)
-
-	varimp_store_gbm <- lapply(varimp_store_gbm, function(x) x %>% left_join(true_names, by=c("var"="new_names")) %>% select(-var) %>% relocate(Overall, proper_names, id, s) %>% magrittr::set_colnames(c("Overall", "var", "id", "s")))
-
-	varimp_store_xgb_gain <- lapply(varimp_store_xgb_gain, function(x) x %>% left_join(true_names, by=c("var"="new_names")) %>% select(-var) %>% relocate(Overall, proper_names, id, s) %>% magrittr::set_colnames(c("Overall", "var", "id", "s")))
-
-
-	varimp_store_xgb_shap <- lapply(varimp_store_xgb_shap, function(x) x %>% left_join(true_names, by=c("var"="new_names")) %>% select(-var) %>% relocate(mean_abs_shap, proper_names, id) %>% magrittr::set_colnames(c("mean_abs_shap", "var", "id")))
 }
+
+true_names <- "tremors-paper-var-names.csv" %>% read_csv() %>% select(2,3)
+
+varimp_store_gbm <- lapply(varimp_store_gbm, function(x) x %>% left_join(true_names, by=c("var"="new_names")) %>% select(-var) %>% relocate(Overall, proper_names, id, s) %>% magrittr::set_colnames(c("Overall", "var", "id", "s")))
+
+varimp_store_xgb_gain <- lapply(varimp_store_xgb_gain, function(x) x %>% left_join(true_names, by=c("var"="new_names")) %>% select(-var) %>% relocate(Overall, proper_names, id, s) %>% magrittr::set_colnames(c("Overall", "var", "id", "s")))
+
+
+varimp_store_xgb_shap <- lapply(varimp_store_xgb_shap, function(x) x %>% left_join(true_names, by=c("var"="new_names")) %>% select(-var) %>% relocate(mean_abs_shap, proper_names, id) %>% magrittr::set_colnames(c("mean_abs_shap", "var", "id")))
 
 
 library(scales)
@@ -409,7 +410,7 @@ get_cor_plot <- function(df1, df2){
 
 	x <- left_join(df1, df2, by=c("var" = "var")) %>% filter(complete.cases(.))
 
-	plt <- ggplot(x, aes(x=s.x, y=s.y)) + geom_point(size = 2) + theme_minimal() + theme(panel.grid = element_blank(), panel.border = element_rect(color = "black", fill = "transparent")) + xlab(paste0("Variable importance\nfrom ", x$type.x %>% unique(), " model")) + ylab(paste0("Variable importance\nfrom ", x$type.y %>% unique(), " model")) + theme(axis.title = element_text(size = 14), axis.text = element_blank()) + geom_smooth(method = "lm", se = FALSE) + geom_label(x=quantile(x$s.x, .92), y = median(x$s.y), label = paste0("Pearson Corr: ", round(cor(x$s.x, x$s.y, method = "pearson"), 3)), size = 6)
+	plt <- ggplot(x, aes(x=s.x, y=s.y)) + geom_point(size = 2) + theme_minimal() + theme(panel.grid = element_blank(), panel.border = element_rect(color = "black", fill = "transparent")) + xlab(paste0("Variable importance\nfrom ", x$type.x %>% unique(), " model")) + ylab(paste0("Variable importance\nfrom ", x$type.y %>% unique(), " model")) + theme(axis.title = element_text(size = 14), axis.text = element_blank()) + geom_smooth(method = "lm", se = FALSE) + geom_label(x=quantile(x$s.x, .96), y = median(x$s.y), label = paste0("Pearson Corr: ", round(cor(x$s.x, x$s.y, method = "pearson"), 3)), size = 6)
 
 	print(cor.test(x$s.x, x$s.y, method = "pearson"))
 

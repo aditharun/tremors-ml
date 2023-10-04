@@ -16,6 +16,8 @@ The variable `tremors` is the name of the folder to store outputs in
 The variable `FALSE` performs the ML analysis from scratch. If set to `TRUE` then the script reads in `tremors/results.rds` object with pre-computed results that are plotted to form outputs in `tremors/`. 
 
 
+To get the initial variable importances for each of the three methods using the entire data set, once the `predict-tremor.R` script is run, run `Rscript init-var-imp.R tremors` to generate tremors/initial-sx-importances.xlsx
+
 
 
 

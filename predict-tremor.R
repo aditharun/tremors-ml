@@ -16,7 +16,10 @@ options <- commandArgs(trailingOnly = TRUE)
 
 #matrix called "merged" with rows being patients and columns being symptoms
 #one column called status that has the classification
-merged <- read_csv(options[1])
+
+if (file.exists(options[1])){
+	merged <- read_csv(options[1])
+}
 
 #class1varname is the value of the class 1 as a character
 class1_variablename <- options[2]
@@ -363,7 +366,7 @@ final.n.vars.gbm <- get_n_vars(results_gbm)
 
 final.var.imp_gbm <- results_gbm %>% mutate(idx = 1:n()) %>% filter(n.vars == final.n.vars.gbm) %>% pull(idx) %>% varimp_store_gbm[[.]]
 
-gbm_roc_n <- results_gbm %>% ggplot(aes(x=n.vars, y=auc)) + geom_point(size = 2.25) + geom_line(size = 0.85) + geom_errorbar(aes(ymin=lb, ymax = ub), size = 0.45, width = 0.1, color="grey80") + theme_minimal() + theme(panel.grid = element_blank(), panel.border = element_rect(color="black", fill = "transparent")) + theme(axis.text = element_text(size = 12), axis.title = element_text(size = 18)) + ylab("AUC w/ 95% CI") + xlab("Number of variables\nin gbm method") + geom_vline(xintercept = final.n.vars.gbm, color="red", linetype = "dashed", size = 0.3) + theme(panel.grid.major.y = element_line(color = "grey80")) + theme(axis.ticks.x = element_line(color = "black"))
+gbm_roc_n <- results_gbm %>% ggplot(aes(x=n.vars, y=auc)) + geom_point(size = 2.25) + geom_line(size = 0.85) + geom_errorbar(aes(ymin=lb, ymax = ub), size = 0.45, width = 0.1, color="grey80") + theme_minimal() + theme(panel.grid = element_blank(), panel.border = element_rect(color="black", fill = "transparent")) + theme(axis.text = element_text(size = 12), axis.title = element_text(size = 18)) + ylab("AUC with 95% CI") + xlab("Number of variables\nin gbm method") + geom_vline(xintercept = final.n.vars.gbm, color="red", linetype = "dashed", size = 0.3) + theme(panel.grid.major.y = element_line(color = "grey80")) + theme(axis.ticks.x = element_line(color = "black"))
 
 gbm_all_sx <- sx_varimp_plot(varimp_store_gbm[[1]] %>% mutate(colstatus = ifelse(id <= final.n.vars.gbm, "Yes", "No")) )
 
@@ -375,7 +378,7 @@ final.n.vars.gain <- get_n_vars(results_xgb_gain)
 
 final.var.gain_xgb <- results_xgb_gain %>% mutate(idx = 1:n()) %>% filter(n.vars == final.n.vars.gain) %>% pull(idx) %>% varimp_store_xgb_gain[[.]]
 
-xgb_roc_n_gain <- results_xgb_gain %>% ggplot(aes(x=n.vars, y=auc)) + geom_point(size = 2.25) + geom_line(size = 0.85) + geom_errorbar(aes(ymin=lb, ymax = ub), size = 0.45, width = 0.1, color="grey80") + theme_minimal() + theme(panel.grid = element_blank(), panel.border = element_rect(color="black", fill = "transparent")) + theme(axis.text = element_text(size = 12), axis.title = element_text(size = 18)) + ylab("AUC w/ 95% CI") + xlab("Number of variables\nin xgboost gain method") + geom_vline(xintercept = final.n.vars.gain, color="red", linetype = "dashed", size = 0.3) + theme(panel.grid.major.y = element_line(color = "grey80")) + theme(axis.ticks.x = element_line(color = "black"))
+xgb_roc_n_gain <- results_xgb_gain %>% ggplot(aes(x=n.vars, y=auc)) + geom_point(size = 2.25) + geom_line(size = 0.85) + geom_errorbar(aes(ymin=lb, ymax = ub), size = 0.45, width = 0.1, color="grey80") + theme_minimal() + theme(panel.grid = element_blank(), panel.border = element_rect(color="black", fill = "transparent")) + theme(axis.text = element_text(size = 12), axis.title = element_text(size = 18)) + ylab("AUC with 95% CI") + xlab("Number of variables\nin xgboost gain method") + geom_vline(xintercept = final.n.vars.gain, color="red", linetype = "dashed", size = 0.3) + theme(panel.grid.major.y = element_line(color = "grey80")) + theme(axis.ticks.x = element_line(color = "black"))
 
 
 xgb_gain_all_sx <- sx_varimp_plot(varimp_store_xgb_gain[[1]] %>% mutate(colstatus = ifelse(id <= final.n.vars.gain, "Yes", "No")) )
@@ -388,7 +391,7 @@ final.n.vars.shap <- get_n_vars(results_xgb_shap)
 
 final.var.shap_xgb <- results_xgb_shap %>% mutate(idx = 1:n()) %>% filter(n.vars == final.n.vars.shap) %>% pull(idx) %>% varimp_store_xgb_shap[[.]]
 
-xgb_roc_n_shap <- results_xgb_shap %>% ggplot(aes(x=n.vars, y=auc)) + geom_point(size = 2.25) + geom_line(size = 0.85) + geom_errorbar(aes(ymin=lb, ymax = ub), size = 0.45, width = 0.1, color="grey80") + theme_minimal() + theme(panel.grid = element_blank(), panel.border = element_rect(color="black", fill = "transparent")) + theme(axis.text = element_text(size = 12), axis.title = element_text(size = 18)) + ylab("AUC w/ 95% CI") + xlab("Number of variables\nin xgboost shap method") + geom_vline(xintercept = final.n.vars.shap, color="red", linetype = "dashed", size = 0.3) + theme(panel.grid.major.y = element_line(color = "grey80")) + theme(axis.ticks.x = element_line(color = "black"))
+xgb_roc_n_shap <- results_xgb_shap %>% ggplot(aes(x=n.vars, y=auc)) + geom_point(size = 2.25) + geom_line(size = 0.85) + geom_errorbar(aes(ymin=lb, ymax = ub), size = 0.45, width = 0.1, color="grey80") + theme_minimal() + theme(panel.grid = element_blank(), panel.border = element_rect(color="black", fill = "transparent")) + theme(axis.text = element_text(size = 12), axis.title = element_text(size = 18)) + ylab("AUC with 95% CI") + xlab("Number of variables\nin xgboost shap method") + geom_vline(xintercept = final.n.vars.shap, color="red", linetype = "dashed", size = 0.3) + theme(panel.grid.major.y = element_line(color = "grey80")) + theme(axis.ticks.x = element_line(color = "black"))
 
 
 xgb_shap_all_sx <- sx_varimp_plot(varimp_store_xgb_shap[[1]] %>% mutate(colstatus = ifelse(id <= final.n.vars.shap, "Yes", "No")) %>% magrittr::set_colnames(c("s", "var", "id", "colstatus")), method = "shap")
